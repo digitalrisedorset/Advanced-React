@@ -40,9 +40,9 @@ const DisplayError = ({ error }) => {
   );
 };
 
-DisplayError.defaultProps = {
-  error: {},
-};
+// DisplayError.defaultProps = {
+//   error: {},
+// };
 
 DisplayError.propTypes = {
   error: PropTypes.object,
