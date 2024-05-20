@@ -1,10 +1,11 @@
 import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
+import Head from 'next/head';
+import Link from 'next/link';
 import PaginationStyles from './styles/PaginationStyles';
 import DisplayError from './ErrorMessage';
 import { perPage } from '../config';
-import PaginationPrev from "./PaginationPrev";
-import PaginationNext from "./PaginationNext";
+import {useRouter} from "next/router";
 
 export const PAGINATION_QUERY = gql`
   query PAGINATION_QUERY {
@@ -13,34 +14,42 @@ export const PAGINATION_QUERY = gql`
 `;
 
 export default function Pagination({ page }) {
-  //const navigate = useNavigate()
-  const { error, loading, data } = useQuery(PAGINATION_QUERY);
-  if (loading) return 'Loading...';
-  if (error) return <DisplayError error={error} />;
-  const { productsCount } = data;
-  const pageCount = Math.ceil(productsCount / perPage);
+    const router = useRouter()
+    const { error, loading, data } = useQuery(PAGINATION_QUERY);
+    if (loading) return 'Loading...';
+    if (error) return <DisplayError error={error} />;
+    const { productsCount } = data;
+    const pageCount = Math.ceil(productsCount / perPage);
 
     if (page < 1) {
-        navigate(`/products`)
+        router.push({
+            pathname: `/products`
+        })
     }
 
-  if (page > pageCount) {
-      //navigate(`/products/${pageCount}`)
-  }
+    if (page > pageCount) {
+        router.push({
+            pathname: `/products/${pageCount}`
+        })
+    }
 
-  return (
-    <PaginationStyles>
-      <p>
-        <title>
-          Sick Fits - Page {page} of {pageCount}
-        </title>
-      </p>
-      <PaginationPrev page={page} />
-      <p>
-        Page {page} of {pageCount}
-      </p>
-      <p>{productsCount} Items Total</p>
-      <PaginationNext page={page} pageCount={pageCount} />
-    </PaginationStyles>
-  );
+    return (
+        <PaginationStyles>
+            <Head>
+                <title>
+                    Sick Fits - Page {page} of {pageCount}
+                </title>
+            </Head>
+            <Link href={`/products/${page - 1}`}>
+                <span aria-disabled={page <= 1}>← Prev</span>
+            </Link>
+            <p>
+                Page {page} of {pageCount}
+            </p>
+            <p>{productsCount} Items Total</p>
+            <Link href={`/products/${page + 1}`}>
+                <span aria-disabled={page >= pageCount}>Next →</span>
+            </Link>
+        </PaginationStyles>
+    );
 }

@@ -3,7 +3,7 @@ import {useCombobox} from "downshift";
 import {useLazyQuery} from "@apollo/client";
 import gql from "graphql-tag";
 import debounce from 'lodash.debounce';
-//import {useNavigate} from "react-router-dom";
+import {useRouter} from "next/router";
 
 const SEARCH_PRODUCTS_QUERY = gql`
   query Products($where: ProductWhereInput!) {
@@ -23,23 +23,19 @@ const SEARCH_PRODUCTS_QUERY = gql`
 `;
 
 export default function Search() {
-  //const navigate = useNavigate()
+  const router = useRouter()
   const [findItems, {loading, data, errors}] = useLazyQuery(SEARCH_PRODUCTS_QUERY, {fetchPolicy: 'no-cache'})
   const items = data?.searchTerms || []
 
   const findItemsButChill = debounce(findItems, 350)
   const {
     isOpen,
-    getToggleButtonProps,
-    getLabelProps,
     getMenuProps,
     getInputProps,
     highlightedIndex,
-    getItemProps,
-    selectedItem
+    getItemProps
   } = useCombobox({
     onInputValueChange({inputValue}) {
-      //setItems(products.filter(getProductsFilter(inputValue)))
       findItemsButChill({
         variables: {
           where: {
@@ -52,8 +48,9 @@ export default function Search() {
       })
     },
     onSelectedItemChange({ selectedItem }) {
-      console.log('selected item changed',selectedItem)
-      //navigate(`/product/${selectedItem.id}`)
+      router.push({
+        pathname: `/product/${selectedItem.id}`
+      })
     },
     items,
     itemToString: (item) => item?.name || ''
@@ -75,7 +72,7 @@ export default function Search() {
               highlighted={index === highlightedIndex}
           >
             <img
-                src={item.photo.image.publicUrlTransformed}
+                src={item?.photo?.image?.publicUrlTransformed}
                 alt={item.name}
                 width="50"
             />

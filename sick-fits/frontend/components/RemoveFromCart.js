@@ -12,9 +12,9 @@ const BigButton = styled.button`
   }
 `;
 
-const REMOVE_FROM_CART_MUTATION = gql`
-  mutation REMOVE_FROM_CART_MUTATION($id: ID!) {
-    deleteCartItem(id: $id) {
+const REMOVE_FROM_CART_MUTATION = gql`  
+  mutation DeleteCartItem($where: CartItemWhereUniqueInput!) {
+    deleteCartItem(where: $where) {
       id
     }
   }
@@ -26,14 +26,14 @@ function update(cache, payload) {
 
 export default function RemoveFromCart({ id }) {
   const [removeFromCart, { loading }] = useMutation(REMOVE_FROM_CART_MUTATION, {
-    variables: { id },
+    variables: { "where": {"id": id} },
     update,
-    // optimisticResponse: {
-    //   deleteCartItem: {
-    //     __typename: 'CartItem',
-    //     id,
-    //   },
-    // },
+    optimisticResponse: {
+      deleteCartItem: {
+        __typename: 'CartItem',
+        id,
+      },
+    },
   });
   return (
     <BigButton
