@@ -1,3 +1,4 @@
+import {configDotenv} from "dotenv";
 import { config } from '@keystone-6/core'
 import { fixPrismaPath } from './example-utils'
 import type { TypeInfo } from '.keystone/types'
@@ -17,7 +18,7 @@ const sessionMaxAge = 60 * 60
 export default withAuth<TypeInfo<Session>>(
     config<TypeInfo>({
       server: {
-        cors: { origin: ['http://localhost:7777'], credentials: true },
+        cors: { origin: [configDotenv().parsed.FRONTEND_URL], credentials: true },
         port: 3000,
         maxFileSize: 200 * 1024 * 1024,
         extendExpressApp: async (app, commonContext) => { /* ... */ },
