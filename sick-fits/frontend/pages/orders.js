@@ -1,5 +1,5 @@
-export default function OrderPage() {
-    return <div>
-        <p>Order!</p>
-    </div>
+import Orders from "../components/Orders";
+
+export default function OrdersPage() {
+    return <Orders />
 }

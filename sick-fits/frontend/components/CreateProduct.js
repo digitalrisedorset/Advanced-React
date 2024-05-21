@@ -4,7 +4,8 @@ import useForm from '../lib/useForm';
 import DisplayError from './ErrorMessage';
 import { ALL_PRODUCTS_QUERY } from './Products';
 import Form from './styles/Form';
-//import { useNavigate } from "react-router-dom"
+import {useRouter} from "next/router";
+
 
 const CREATE_PRODUCT_MUTATION = gql`
   mutation CREATE_PRODUCT_MUTATION(
@@ -32,7 +33,7 @@ const CREATE_PRODUCT_MUTATION = gql`
 `;
 
 export default function CreateProduct() {
-    //const navigate = useNavigate()
+    const router = useRouter()
     const { inputs, handleChange, clearForm, resetForm } = useForm({
         name: '',
         price: 0,
@@ -54,9 +55,9 @@ export default function CreateProduct() {
                 // Submit the inputfields to the backend:
                 const res = await createProduct()
                 clearForm()
-                //navigate(`/product/${res.data.createProduct.id}`);
-                const id = 'clw7mo7ig000110pnux65yad7'
-                //navigate(`/product/${id}`)
+                router.push({
+                    pathname: `/product/${res.id}`
+                })
             }}
         >
             <fieldset disabled={loading} aria-busy={loading}>

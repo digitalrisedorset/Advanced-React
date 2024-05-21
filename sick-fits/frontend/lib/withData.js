@@ -4,6 +4,7 @@ import { getDataFromTree } from '@apollo/client/react/ssr';
 import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
 import withApollo from 'next-with-apollo';
 import {graphqlEndpoint} from "../config";
+import paginationField from "./paginationField";
 
 /*const middlewareUpdate = createUploadLink(
     {
@@ -51,7 +52,7 @@ function createClient({ headers, initialState }) {
       typePolicies: {
         Query: {
           fields: {
-            //products: paginationField(),
+            products: paginationField(),
           },
         },
       },

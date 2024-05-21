@@ -45,8 +45,6 @@ export default function SingleProduct({id}) {
   if (loading) return <p>Loading...</p>;
   if (error) return <DisplayError error={error} />;
 
-  console.log({data, loading, error})
-
   const { product } = data;
 
 return (
