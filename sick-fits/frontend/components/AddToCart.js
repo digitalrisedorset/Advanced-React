@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
-import { CURRENT_USER_QUERY } from './User';
+import {CURRENT_USER_QUERY, useUser} from './User';
 import styled from "styled-components";
 
 const ADD_TO_CART_MUTATION = gql`

@@ -28,8 +28,7 @@ const ProductsListStyles = styled.div`
   grid-gap: 60px;
 `;
 
-export default function Products() {
-  let page = 1;
+export default function Products({page}) {
   const pageNumber = parseInt(page)
 
   const { data, error, loading } = useQuery(ALL_PRODUCTS_QUERY, {

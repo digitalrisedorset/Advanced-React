@@ -3,27 +3,11 @@ import { onError } from '@apollo/link-error';
 import { getDataFromTree } from '@apollo/client/react/ssr';
 import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
 import withApollo from 'next-with-apollo';
-import {graphqlEndpoint} from "../config";
 import paginationField from "./paginationField";
 
-/*const middlewareUpdate = createUploadLink(
-    {
-      uri: 'http://localhost:3000/api/graphql'
-    });
-const authLink = setContext((_, { headers }) => {
-  // Leer el storage almacenado
-  const token = localStorage.getItem("token");
-  // console.log(token);
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : "",
-      'Apollo-Require-Preflight': 'true'
-    },
-  };
-});*/
-
 function createClient({ headers, initialState }) {
+  const graphqlEndpoint = process.env.NEXT_PUBLIC_GRAPHQL || 'http://localhost:3000'
+
   return new ApolloClient({
     link: ApolloLink.from([
       onError(({ graphQLErrors, networkError }) => {
@@ -40,7 +24,7 @@ function createClient({ headers, initialState }) {
       }),
       // this uses apollo-link-http under the hood, so all the options here come from that package
       createUploadLink({
-        uri: 'http://localhost:3000/api/graphql',
+        uri: `${graphqlEndpoint}/api/graphql`,
         fetchOptions: {
           credentials: 'include'
         },

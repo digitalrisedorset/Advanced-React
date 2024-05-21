@@ -6,6 +6,7 @@ import DisplayError from './ErrorMessage';
 import formatMoney from "../lib/formatMoney";
 import PriceTag from "./styles/PriceTag";
 import AddToCart from "./AddToCart";
+import {useUser} from "./User";
 
 const ProductStyles = styled.div`
     position: relative;
@@ -41,6 +42,7 @@ const SINGLE_ITEM_QUERY = gql`
 `;
 
 export default function SingleProduct({id}) {
+    const user = useUser();
   const { data, loading, error } = useQuery(SINGLE_ITEM_QUERY, {
     variables: {
       id,
@@ -54,7 +56,7 @@ export default function SingleProduct({id}) {
 return (
     <ProductStyles>
         <Head>
-            <title>Sick Fits | {product.name}</title>
+            <title>Rise Dorset | {product.name}</title>
         </Head>
         <img
             src={product.photo.image.publicUrlTransformed}
@@ -64,7 +66,9 @@ return (
             <h2>{product.name}</h2>
             <p>{product.description}</p>
             <PriceTag>{formatMoney(product.price)}</PriceTag>
-            <AddToCart id={product.id} />
+            {user && (
+                <AddToCart id={product.id} />
+            )}
         </div>
     </ProductStyles>
     );

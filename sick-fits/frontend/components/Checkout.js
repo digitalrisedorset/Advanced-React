@@ -14,6 +14,7 @@ import {useMutation} from "@apollo/client";
 import {useRouter} from "next/router";
 import {CURRENT_USER_QUERY} from "./User";
 import {useCart} from "../lib/cartState";
+import {USER_ORDERS_QUERY} from "./Orders";
 
 const CheckoutFormStyles = styled.form`
   box-shadow: 0 1px 2px 2px rgba(0, 0, 0, 0.04);
@@ -49,7 +50,7 @@ function CheckoutForm() {
     const { closeCart } = useCart()
 
     const [checkout, { graphqlError }] = useMutation(CREATE_ORDER_MUTATION, {
-        refetchQueries: [{ query: CURRENT_USER_QUERY }],
+        refetchQueries: [{ query: CURRENT_USER_QUERY }, { query: USER_ORDERS_QUERY }],
     });
 
     async function handleSubmit(e) {
@@ -61,7 +62,6 @@ function CheckoutForm() {
             card: elements.getElement(CardElement)
         })
 
-        console.log(paymentMethod)
         if (error) {
             setError(error)
             nProgress.done()

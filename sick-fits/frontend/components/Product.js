@@ -21,7 +21,9 @@ export default function Product({ product }) {
           </Title>
           <PriceTag>{formatMoney(product.price)}</PriceTag>
           <p>{product.description}</p>
-          <AddToCart id={product.id} />
+          {user && (
+              <AddToCart id={product.id} />
+          )}
           {user && user.isAdmin && (
           <div className="buttonList">
               <Link href={{pathname: `/update/${product.id}`}}>

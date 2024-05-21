@@ -7,13 +7,16 @@ import ErrorMessage from '../components/ErrorMessage';
 import formatMoney from '../lib/formatMoney';
 import OrderItemStyles from '../components/styles/OrderItemStyles';
 import {useUser} from "./User";
+import {perPage} from "../config";
+import {ALL_PRODUCTS_QUERY} from "./Products";
 
-const USER_ORDERS_QUERY = gql`
-  query Orders {
-    orders {
+export const USER_ORDERS_QUERY = gql`
+  query Orders($where: OrderWhereInput!, $orderBy: [OrderOrderByInput!]!) {
+    orders(where: $where, orderBy: $orderBy) {
       id
       charge
       total
+      createdAt
       user {
         id
       }
@@ -48,10 +51,12 @@ export default function OrdersPage() {
     if (!me) return null;
 
     const { data, error, loading } = useQuery(USER_ORDERS_QUERY, {
-        variable: {
-            where: { user: { id: me.id }}
-        }
+        variables: {
+            where: { user: { id: { equals:me.id } }},
+            orderBy: { createdAt: "desc" }
+        },
     });
+
     if (loading) return <p>Loading...</p>;
     if (error) return <ErrorMessage error={error} />;
     const { orders } = data;
@@ -67,12 +72,14 @@ export default function OrdersPage() {
                         <Link href={`/order/${order.id}`}>
                             <span>
                                 <div className="order-meta">
-                                    <p>{countItemsInAnOrder(order)} Items</p>
-                                    <p>
-                                        {order.items.length} Product
-                                        {order.items.length === 1 ? '' : 's'}
+                                    <p>Created at:<br/>
+                                        {new Date(order.createdAt).toLocaleDateString()}<br/>
+                                        {new Date(order.createdAt).toLocaleTimeString()}
                                     </p>
-                                    <p>{formatMoney(order.total)}</p>
+                                    <p>Number Products: <br/>{countItemsInAnOrder(order)} Item
+                                        {countItemsInAnOrder(order) === 1 ? '' : 's'}
+                                    </p>
+                                    <p>Total: <br/>{formatMoney(order.total)}</p>
                                 </div>
                                 <div className="images">
                                     {order.items.map((item) => (

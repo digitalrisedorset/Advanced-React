@@ -40,7 +40,7 @@ export default function SingleOrder({id}) {
 
     return <OrderStyles>
         <Head>
-            <title>Sick Fits - {order.id}</title>
+            <title>Rise Dorset - {order.id}</title>
         </Head>
         <p>
             <span>Order Id:</span>
