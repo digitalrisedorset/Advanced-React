@@ -10,14 +10,15 @@ const GlobalStyles = createGlobalStyle`
     font-style: normal;
   }
   html {
-    --red: #ff0000;
+    --red: #ef132c;
     --black: #393939;
-    --grey: #3A3A3A;
+    --grey: #605b5a;
     --gray: var(--grey);
     --lightGrey: #e1e1e1;
     --lightGray: var(--lightGrey);
     --offWhite: #ededed;
-    --maxWidth: 1000px;
+    --maxWidth: 1200px;
+    --navSize: 1rem;  
     --bs: 0 12px 24px 0 rgba(0,0,0,0.09);
     box-sizing: border-box;
   }
@@ -28,12 +29,15 @@ const GlobalStyles = createGlobalStyle`
     font-family: 'radnika_next', --apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     padding: 0;
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 1rem;
     line-height:2;
+  }
+  p, button {
+      color: var(--grey);
   }
   a {
     text-decoration: none;
-    color: var(---black);
+    color: var(--grey);
   }
   a:hover {
     text-decoration: underline;

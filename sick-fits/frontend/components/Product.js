@@ -21,12 +21,12 @@ export default function Product({ product }) {
           </Title>
           <PriceTag>{formatMoney(product.price)}</PriceTag>
           <p>{product.description}</p>
-          {user && (
+          <AddToCart id={product.id} />
+          {user && user.isAdmin && (
           <div className="buttonList">
               <Link href={{pathname: `/update/${product.id}`}}>
                   Edit ✏️
               </Link>
-              <AddToCart id={product.id} />
               <DeleteProduct id={product.id}>Delete</DeleteProduct>
           </div>)}
       </ItemStyles>

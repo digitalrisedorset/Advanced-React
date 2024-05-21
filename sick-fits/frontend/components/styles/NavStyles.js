@@ -5,14 +5,13 @@ const NavStyles = styled.ul`
   padding: 0;
   display: flex;
   justify-self: end;
-  font-size: 2rem;
+  font-size: var(--navSize);
   a,
   button {
     padding: 1rem 3rem;
     display: flex;
     align-items: center;
     position: relative;
-    text-transform: uppercase;
     font-weight: 900;
     font-size: 1em;
     background: none;
@@ -35,7 +34,7 @@ const NavStyles = styled.ul`
     }
     &:after {
       height: 2px;
-      background: red;
+      background: var(--red);
       content: '';
       width: 0;
       position: absolute;
@@ -50,7 +49,7 @@ const NavStyles = styled.ul`
       outline: none;
       text-decoration:none;
       &:after {
-        width: calc(100% - 60px);
+        width: calc(100% - 80px);
       }
       @media (max-width: 700px) {
         width: calc(100% - 10px);

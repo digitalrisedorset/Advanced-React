@@ -52,7 +52,7 @@ export default function RequestReset() {
             onChange={handleChange}
           />
         </label>
-        <button type="submit">Request Reset!</button>
+        <button type="submit">Request Reset</button>
       </fieldset>
     </Form>
   );

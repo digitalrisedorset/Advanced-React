@@ -55,7 +55,7 @@ export default function Cart() {
   return (
       <CartStyles open={cartOpen}>
           <header>
-              <Supreme>{me.name}'s Cart</Supreme>
+              <Supreme>Your cart</Supreme>
               <CloseButton onClick={ closeCart }>&times;</CloseButton>
           </header>
           <ul>

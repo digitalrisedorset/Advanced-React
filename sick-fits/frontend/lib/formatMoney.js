@@ -1,7 +1,7 @@
 export default function formatMoney(amount = 0) {
   const options = {
     style: 'currency',
-    currency: 'USD',
+    currency: process.env.NEXT_PUBLIC_CURRENCY,
     minimumFractionDigits: 2,
   };
 
@@ -10,7 +10,7 @@ export default function formatMoney(amount = 0) {
     options.minimumFractionDigits = 0;
   }
 
-  const formatter = Intl.NumberFormat('en-US', options);
+  const formatter = Intl.NumberFormat(process.env.NEXT_PUBLIC_LOCALE, options);
 
   return formatter.format(amount / 100);
 }

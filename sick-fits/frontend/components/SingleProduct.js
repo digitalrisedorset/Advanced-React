@@ -3,8 +3,12 @@ import gql from 'graphql-tag';
 import Head from 'next/head';
 import styled from 'styled-components';
 import DisplayError from './ErrorMessage';
+import formatMoney from "../lib/formatMoney";
+import PriceTag from "./styles/PriceTag";
+import AddToCart from "./AddToCart";
 
 const ProductStyles = styled.div`
+    position: relative;
   display: grid;
   grid-auto-columns: 1fr;
   grid-auto-flow: column;
@@ -59,6 +63,8 @@ return (
         <div className="details">
             <h2>{product.name}</h2>
             <p>{product.description}</p>
+            <PriceTag>{formatMoney(product.price)}</PriceTag>
+            <AddToCart id={product.id} />
         </div>
     </ProductStyles>
     );

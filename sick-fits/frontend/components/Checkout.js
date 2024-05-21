@@ -60,6 +60,7 @@ function CheckoutForm() {
             type: 'card',
             card: elements.getElement(CardElement)
         })
+
         console.log(paymentMethod)
         if (error) {
             setError(error)
@@ -85,11 +86,16 @@ function CheckoutForm() {
         })
     }
 
+    const paymentElementOptions = {
+        layout: 'tabs',
+        paymentMethodOrder: ['card']
+    };
+
     return (
         <CheckoutFormStyles onSubmit={handleSubmit}>
             { error && <p style={{fontSize: 12}}>{error.message}</p>}
             { graphqlError && <p style={{fontSize: 12}}>{graphqlError.message}</p>}
-            <CardElement />
+            <CardElement options={paymentElementOptions} />
             <SickButton>Checkout Now</SickButton>
         </CheckoutFormStyles>
     )

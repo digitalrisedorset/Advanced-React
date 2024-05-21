@@ -12,7 +12,7 @@ const DropDownItem = styled.div`
   background: ${(props) => (props.highlighted ? '#f7f7f7' : 'white')};
   padding: 1rem;
   transition: all 0.2s;
-  ${(props) => (props.highlighted ? 'padding-left: 2rem;' : null)};
+  padding-left: 2rem;
   display: flex;
   align-items: center;
   border-left: 10px solid

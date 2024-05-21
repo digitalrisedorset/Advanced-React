@@ -85,7 +85,7 @@ export default function SignUp() {
             onChange={handleChange}
           />
         </label>
-        <button type="submit">Sign Up!</button>
+        <button type="submit">Register</button>
       </fieldset>
     </Form>
   );

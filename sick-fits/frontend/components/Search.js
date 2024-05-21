@@ -4,6 +4,7 @@ import {useLazyQuery} from "@apollo/client";
 import gql from "graphql-tag";
 import debounce from 'lodash.debounce';
 import {useRouter} from "next/router";
+import {useState} from "react";
 
 const SEARCH_PRODUCTS_QUERY = gql`
   query Products($where: ProductWhereInput!) {
@@ -24,6 +25,7 @@ const SEARCH_PRODUCTS_QUERY = gql`
 
 export default function Search() {
   const router = useRouter()
+  const [inputTerm, setInputTerm] = useState('')
   const [findItems, {loading, data, errors}] = useLazyQuery(SEARCH_PRODUCTS_QUERY, {fetchPolicy: 'no-cache'})
   const items = data?.searchTerms || []
 
@@ -36,6 +38,7 @@ export default function Search() {
     getItemProps
   } = useCombobox({
     onInputValueChange({inputValue}) {
+      setInputTerm(inputValue)
       findItemsButChill({
         variables: {
           where: {
@@ -79,7 +82,7 @@ export default function Search() {
             {item.name}
           </DropDownItem>
       ))}
-      {isOpen && !items.length && !loading && (
+      {isOpen && !items.length && !loading && (inputTerm.length > 2) && (
           <DropDownItem>Sorry, No items found</DropDownItem>
       )}
     </DropDown>
