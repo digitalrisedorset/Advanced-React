@@ -2,6 +2,7 @@ import { list, graphql } from '@keystone-6/core'
 import { allowAll } from '@keystone-6/core/access'
 import { relationship, text, timestamp, integer, virtual, password } from '@keystone-6/core/fields'
 import type { Lists } from '.keystone/types'
+import formatMoney from '../lib/formatMoney';
 
 export const Order = list({
     access: allowAll,

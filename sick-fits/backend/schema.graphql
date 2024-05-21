@@ -733,6 +733,7 @@ type Mutation {
   sendUserMagicAuthLink(email: String!): Boolean!
   redeemUserMagicAuthToken(email: String!, token: String!): RedeemUserMagicAuthTokenResult!
   addToCart(productId: ID!): CartItem
+  checkout(token: String!): Order
 }
 
 union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure
